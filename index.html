@@ -122,33 +122,6 @@
             transform: translateY(1px);
         }
         
-        .speed-control {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 1.5rem;
-            color: #4d94ff;
-        }
-        
-        input[type="range"] {
-            width: 200px;
-            height: 10px;
-            -webkit-appearance: none;
-            background: rgba(10, 10, 30, 0.7);
-            border-radius: 5px;
-            outline: none;
-        }
-        
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #ff4d4d;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
-        }
-        
         .footer {
             position: absolute;
             bottom: 20px;
@@ -224,15 +197,7 @@
         <div class="controls">
             <button id="pauseBtn">Pause</button>
         </div>
-        
-        <div class="speed-control">
-            <span>Speed:</span>
-            <input type="range" id="speedControl" min="500" max="5000" value="2000">
-            <span id="speedValue">2.0s</span>
-        </div>
     </div>
-    
-
 
     <script>
         // Slogans array
@@ -252,11 +217,7 @@
         
         // DOM elements
         const sloganContainer = document.getElementById('sloganContainer');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
         const pauseBtn = document.getElementById('pauseBtn');
-        const speedControl = document.getElementById('speedControl');
-        const speedValue = document.getElementById('speedValue');
         
         // State variables
         let currentIndex = 0;
@@ -293,13 +254,6 @@
             setTimeout(() => showSlogan(currentIndex), 300);
         }
         
-        // Previous slogan
-        function prevSlogan() {
-            sloganElements[currentIndex].classList.add('exiting');
-            currentIndex = (currentIndex - 1 + slogans.length) % slogans.length;
-            setTimeout(() => showSlogan(currentIndex), 300);
-        }
-        
         // Start auto rotation
         function startRotation() {
             if (interval) clearInterval(interval);
@@ -312,13 +266,6 @@
         function togglePause() {
             isPaused = !isPaused;
             pauseBtn.textContent = isPaused ? 'Resume' : 'Pause';
-        }
-        
-        // Update speed
-        function updateSpeed() {
-            speed = parseInt(speedControl.value);
-            speedValue.textContent = (speed / 1000).toFixed(1) + 's';
-            startRotation();
         }
         
         // Create background particles
@@ -355,10 +302,7 @@
         }
         
         // Event listeners
-        prevBtn.addEventListener('click', prevSlogan);
-        nextBtn.addEventListener('click', nextSlogan);
         pauseBtn.addEventListener('click', togglePause);
-        speedControl.addEventListener('input', updateSpeed);
         
         // Initialize
         createParticles();
